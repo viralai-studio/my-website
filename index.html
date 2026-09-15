@@ -6,7 +6,7 @@
 
 <title>ViralAI Studio | AI Tools for Creators</title>
 
-<meta name="description" content="ViralAI Studio helps creators generate viral ideas, hashtags, captions and YouTube Shorts concepts.">
+<meta name="description" content="ViralAI Studio helps creators generate viral ideas, hashtags, captions and YouTube Shorts concepts with AI.">
 
 <style>
 * {
@@ -244,6 +244,7 @@ select:focus {
 .output-item {
   padding: 12px 0;
   border-bottom: 1px solid #252538;
+  white-space: pre-wrap;
 }
 
 .output-item:last-child {
@@ -258,6 +259,19 @@ select:focus {
   padding: 10px 15px;
   border-radius: 8px;
   cursor: pointer;
+}
+
+.copy-btn:hover {
+  background: #38384f;
+}
+
+.loading {
+  color: #c4b5fd;
+  text-align: center;
+}
+
+.error {
+  color: #fca5a5;
 }
 
 .about {
@@ -323,7 +337,6 @@ footer {
 </header>
 
 <section class="hero">
-
   <div class="hero-content">
 
     <div class="badge">
@@ -351,9 +364,7 @@ footer {
     </div>
 
   </div>
-
 </section>
-
 
 <section id="tools">
 
@@ -407,28 +418,24 @@ footer {
 
 </section>
 
-
 <section id="generators">
 
   <div class="container">
 
     <h2 class="section-title">
-      Free Creator Generators
+      AI Creator Generators
     </h2>
 
     <p class="section-subtitle">
-      Try the ViralAI Studio tools directly in your browser.
+      Powered by AI to help you create better content faster.
     </p>
-
-
-    <!-- VIRAL IDEA GENERATOR -->
 
     <div class="generator">
 
-      <h3>💡 Viral Idea Generator</h3>
+      <h3>💡 AI Viral Idea Generator</h3>
 
       <p>
-        Enter your topic and get five content ideas.
+        Enter your topic and let AI create five attention-grabbing ideas.
       </p>
 
       <input
@@ -441,22 +448,19 @@ footer {
         class="btn primary"
         onclick="generateIdeas()"
       >
-        Generate Ideas
+        Generate AI Ideas
       </button>
 
       <div id="ideaOutput" class="output"></div>
 
     </div>
 
-
-    <!-- HASHTAG GENERATOR -->
-
     <div class="generator">
 
-      <h3>#️⃣ Hashtag Generator</h3>
+      <h3>#️⃣ AI Hashtag Generator</h3>
 
       <p>
-        Enter a topic to generate hashtags.
+        Generate relevant hashtags for your topic.
       </p>
 
       <input
@@ -469,22 +473,19 @@ footer {
         class="btn primary"
         onclick="generateHashtags()"
       >
-        Generate Hashtags
+        Generate AI Hashtags
       </button>
 
       <div id="hashOutput" class="output"></div>
 
     </div>
 
-
-    <!-- CAPTION GENERATOR -->
-
     <div class="generator">
 
-      <h3>✍️ Caption Generator</h3>
+      <h3>✍️ AI Caption Generator</h3>
 
       <p>
-        Enter your topic and create ready-to-use captions.
+        Create engaging social captions with AI.
       </p>
 
       <input
@@ -497,22 +498,19 @@ footer {
         class="btn primary"
         onclick="generateCaptions()"
       >
-        Generate Captions
+        Generate AI Captions
       </button>
 
       <div id="captionOutput" class="output"></div>
 
     </div>
 
-
-    <!-- SHORTS GENERATOR -->
-
     <div class="generator">
 
-      <h3>🎬 YouTube Shorts Ideas</h3>
+      <h3>🎬 AI YouTube Shorts Generator</h3>
 
       <p>
-        Enter your niche and get Shorts concepts.
+        Generate Shorts concepts designed to grab attention.
       </p>
 
       <input
@@ -525,7 +523,7 @@ footer {
         class="btn primary"
         onclick="generateShorts()"
       >
-        Generate Shorts Ideas
+        Generate AI Shorts
       </button>
 
       <div id="shortOutput" class="output"></div>
@@ -535,7 +533,6 @@ footer {
   </div>
 
 </section>
-
 
 <section id="about" class="about">
 
@@ -554,7 +551,6 @@ footer {
   </div>
 
 </section>
-
 
 <section class="cta">
 
@@ -576,48 +572,102 @@ footer {
 
 </section>
 
-
 <footer>
-
   © 2026 ViralAI Studio · Built for creators 🚀
-
 </footer>
 
-
 <script>
+
+async function callAI(prompt, outputId) {
+
+  const output = document.getElementById(outputId);
+
+  output.style.display = "block";
+
+  output.innerHTML = `
+    <div class="loading">
+      🤖 AI is generating your content...
+    </div>
+  `;
+
+  try {
+
+    const response = await fetch("/api/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        prompt: prompt
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "AI request failed");
+    }
+
+    if (!data.output) {
+      throw new Error("No AI response was returned.");
+    }
+
+    output.innerHTML = `
+      <div class="output-item">${escapeHTML(data.output)}</div>
+      <button class="copy-btn" onclick="copyOutput('${outputId}')">
+        📋 Copy Result
+      </button>
+    `;
+
+  } catch (error) {
+
+    output.innerHTML = `
+      <div class="output-item error">
+        ❌ ${escapeHTML(error.message)}
+      </div>
+    `;
+
+  }
+}
+
+
+function escapeHTML(text) {
+
+  const div = document.createElement("div");
+
+  div.textContent = text;
+
+  return div.innerHTML;
+}
+
 
 function generateIdeas() {
 
   const topic =
     document.getElementById("ideaTopic").value.trim();
 
-  const output =
-    document.getElementById("ideaOutput");
-
   if (!topic) {
     alert("Please enter a topic first.");
     return;
   }
 
-  const ideas = [
-    `5 Things Nobody Tells You About ${topic}`,
-    `I Tried ${topic} for 7 Days — Here's What Happened`,
-    `The Biggest ${topic} Mistakes Beginners Make`,
-    `10 ${topic} Tips That Can Save You Time`,
-    `The Ultimate ${topic} Challenge`
-  ];
+  const prompt = `
+You are an expert viral content strategist.
 
-  output.style.display = "block";
+Create exactly 5 highly engaging content ideas about:
+${topic}
 
-  output.innerHTML =
-    ideas.map((idea, index) =>
-      `<div class="output-item">
-        ${index + 1}. ${idea}
-      </div>`
-    ).join("") +
-    `<button class="copy-btn" onclick="copyOutput('ideaOutput')">
-      📋 Copy Ideas
-    </button>`;
+For each idea include:
+1. A strong clickable title
+2. A one-sentence description
+3. A suggested hook
+
+Make the ideas suitable for YouTube, TikTok and Instagram.
+Focus on curiosity, strong hooks and shareability.
+Keep the response easy to read.
+`;
+
+  callAI(prompt, "ideaOutput");
 }
 
 
@@ -626,39 +676,29 @@ function generateHashtags() {
   const topic =
     document.getElementById("hashTopic").value.trim();
 
-  const output =
-    document.getElementById("hashOutput");
-
   if (!topic) {
     alert("Please enter a topic first.");
     return;
   }
 
-  const clean =
-    topic.replace(/\s+/g,"");
+  const prompt = `
+You are a social media growth expert.
 
-  const hashtags = [
-    `#${clean}`,
-    `#${clean}Tips`,
-    `#${clean}Ideas`,
-    `#ContentCreator`,
-    `#CreatorTips`,
-    `#ViralContent`,
-    `#YouTube`,
-    `#YouTubeShorts`,
-    `#Shorts`,
-    `#Trending`
-  ];
+Generate 20 useful hashtags for this topic:
+${topic}
 
-  output.style.display = "block";
+Mix:
+- broad hashtags
+- niche hashtags
+- creator hashtags
+- discovery hashtags
+- relevant trending-style hashtags
 
-  output.innerHTML =
-    `<div class="output-item">
-      ${hashtags.join(" ")}
-    </div>
-    <button class="copy-btn" onclick="copyOutput('hashOutput')">
-      📋 Copy Hashtags
-    </button>`;
+Return the hashtags in a clean list.
+Do not add unnecessary explanation.
+`;
+
+  callAI(prompt, "hashOutput");
 }
 
 
@@ -667,33 +707,28 @@ function generateCaptions() {
   const topic =
     document.getElementById("captionTopic").value.trim();
 
-  const output =
-    document.getElementById("captionOutput");
-
   if (!topic) {
     alert("Please enter a topic first.");
     return;
   }
 
-  const captions = [
-    `🚀 Here's something you need to know about ${topic}.`,
-    `🔥 Would you try this? Let's talk about ${topic}.`,
-    `The ${topic} tip I wish I knew earlier.`,
-    `Save this post if you're interested in ${topic}!`,
-    `What do you think about ${topic}? 👇`
-  ];
+  const prompt = `
+You are an expert social media copywriter.
 
-  output.style.display = "block";
+Create 5 engaging captions for:
+${topic}
 
-  output.innerHTML =
-    captions.map((caption, index) =>
-      `<div class="output-item">
-        ${index + 1}. ${caption}
-      </div>`
-    ).join("") +
-    `<button class="copy-btn" onclick="copyOutput('captionOutput')">
-      📋 Copy Captions
-    </button>`;
+Make each caption:
+- attention-grabbing
+- natural
+- suitable for social media
+- designed to encourage comments or shares
+
+Use emojis where appropriate.
+Number the captions 1 through 5.
+`;
+
+  callAI(prompt, "captionOutput");
 }
 
 
@@ -702,33 +737,28 @@ function generateShorts() {
   const topic =
     document.getElementById("shortTopic").value.trim();
 
-  const output =
-    document.getElementById("shortOutput");
-
   if (!topic) {
     alert("Please enter a niche first.");
     return;
   }
 
-  const ideas = [
-    `3 ${topic} Tricks You Need to Know`,
-    `The ${topic} Mistake Everyone Makes`,
-    `I Tested This ${topic} Hack`,
-    `Nobody Talks About This ${topic} Secret`,
-    `Watch This Before You Try ${topic}`
-  ];
+  const prompt = `
+You are a YouTube Shorts strategist.
 
-  output.style.display = "block";
+Create 5 strong YouTube Shorts concepts for:
+${topic}
 
-  output.innerHTML =
-    ideas.map((idea, index) =>
-      `<div class="output-item">
-        🎬 ${index + 1}. ${idea}
-      </div>`
-    ).join("") +
-    `<button class="copy-btn" onclick="copyOutput('shortOutput')">
-      📋 Copy Ideas
-    </button>`;
+For each concept include:
+1. Viral-style title
+2. First 3-second hook
+3. Short video concept
+4. Call to action
+
+Focus on retention, curiosity and shareability.
+Keep each concept concise.
+`;
+
+  callAI(prompt, "shortOutput");
 }
 
 
@@ -740,9 +770,13 @@ function copyOutput(id) {
   const text =
     element.innerText;
 
-  navigator.clipboard.writeText(text);
-
-  alert("Copied to clipboard! ✅");
+  navigator.clipboard.writeText(text)
+    .then(() => {
+      alert("Copied to clipboard! ✅");
+    })
+    .catch(() => {
+      alert("Unable to copy automatically.");
+    });
 }
 
 </script>
