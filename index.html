@@ -1,101 +1,751 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ViralAI Studio</title>
-  <style>
-    body{
-      margin:0;
-      font-family:Arial,sans-serif;
-      background:#0b1020;
-      color:white;
-    }
-    header{
-      padding:20px;
-      text-align:center;
-      background:#6d28d9;
-    }
-    .hero{
-      padding:60px 20px;
-      text-align:center;
-    }
-    h1{
-      font-size:48px;
-      color:#a855f7;
-    }
-    .btn{
-      display:inline-block;
-      margin-top:20px;
-      padding:12px 24px;
-      background:#8b5cf6;
-      color:white;
-      text-decoration:none;
-      border-radius:8px;
-    }
-    .section{
-      padding:40px 20px;
-      max-width:900px;
-      margin:auto;
-    }
-    .card{
-      background:#161b2f;
-      padding:20px;
-      margin:15px 0;
-      border-radius:12px;
-    }
-    footer{
-      text-align:center;
-      padding:20px;
-      color:#aaa;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ViralAI Studio | AI Tools for Creators</title>
+
+<meta name="description" content="ViralAI Studio helps creators generate viral ideas, hashtags, captions and YouTube Shorts concepts.">
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #080812;
+  color: #ffffff;
+  line-height: 1.6;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(8,8,18,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #24243a;
+}
+
+.nav {
+  max-width: 1100px;
+  margin: auto;
+  padding: 18px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 23px;
+  font-weight: 800;
+}
+
+.logo span {
+  color: #a855f7;
+}
+
+nav a {
+  color: #ccc;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 14px;
+}
+
+nav a:hover {
+  color: #a855f7;
+}
+
+.hero {
+  min-height: 620px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 20px;
+  background:
+    radial-gradient(circle at 50% 30%, #4c1d95 0%, #17132e 25%, #080812 65%);
+}
+
+.hero-content {
+  max-width: 850px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 8px 15px;
+  border: 1px solid #6d28d9;
+  border-radius: 30px;
+  color: #d8b4fe;
+  background: rgba(109,40,217,0.15);
+  margin-bottom: 25px;
+  font-size: 14px;
+}
+
+.hero h1 {
+  font-size: clamp(42px, 8vw, 78px);
+  line-height: 1.05;
+  margin-bottom: 25px;
+}
+
+.gradient {
+  background: linear-gradient(90deg,#a855f7,#ec4899,#6366f1);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.hero p {
+  max-width: 680px;
+  margin: auto;
+  color: #b8b8c8;
+  font-size: 19px;
+}
+
+.buttons {
+  margin-top: 32px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 14px 24px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 6px;
+  cursor: pointer;
+  border: none;
+}
+
+.primary {
+  background: #8b5cf6;
+  color: white;
+}
+
+.primary:hover {
+  background: #7c3aed;
+}
+
+.secondary {
+  border: 1px solid #3b3b55;
+  color: white;
+  background: #151522;
+}
+
+section {
+  padding: 85px 20px;
+}
+
+.container {
+  max-width: 1050px;
+  margin: auto;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: #9999aa;
+  max-width: 650px;
+  margin: 0 auto 45px;
+}
+
+.tools {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+  gap: 20px;
+}
+
+.tool-card {
+  background: linear-gradient(145deg,#151525,#0f0f1c);
+  border: 1px solid #28283d;
+  border-radius: 18px;
+  padding: 25px;
+  transition: transform .25s, border .25s;
+}
+
+.tool-card:hover {
+  transform: translateY(-5px);
+  border-color: #8b5cf6;
+}
+
+.tool-icon {
+  font-size: 35px;
+  margin-bottom: 15px;
+}
+
+.tool-card h3 {
+  margin-bottom: 8px;
+}
+
+.tool-card p {
+  color: #9d9dac;
+  font-size: 14px;
+}
+
+.generator {
+  margin-top: 45px;
+  background: #11111e;
+  border: 1px solid #29293f;
+  border-radius: 20px;
+  padding: 30px;
+}
+
+.generator h3 {
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+
+.generator p {
+  color: #9999aa;
+  margin-bottom: 20px;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 14px;
+  background: #080812;
+  color: white;
+  border: 1px solid #35354c;
+  border-radius: 10px;
+  outline: none;
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #8b5cf6;
+}
+
+.output {
+  margin-top: 20px;
+  display: none;
+  background: #090914;
+  border: 1px solid #303047;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.output-item {
+  padding: 12px 0;
+  border-bottom: 1px solid #252538;
+}
+
+.output-item:last-child {
+  border-bottom: none;
+}
+
+.copy-btn {
+  margin-top: 15px;
+  background: #27273b;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.about {
+  background: #0d0d18;
+}
+
+.about-box {
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+}
+
+.about-box p {
+  color: #aaaaba;
+  font-size: 17px;
+}
+
+.cta {
+  text-align: center;
+  background: linear-gradient(135deg,#17102d,#0c1022);
+}
+
+footer {
+  text-align: center;
+  padding: 30px 20px;
+  border-top: 1px solid #24243a;
+  color: #77778a;
+  font-size: 14px;
+}
+
+@media(max-width:700px) {
+  nav {
+    display: none;
+  }
+
+  .hero {
+    min-height: 560px;
+  }
+
+  .hero h1 {
+    font-size: 46px;
+  }
+
+  .section-title {
+    font-size: 32px;
+  }
+}
+</style>
 </head>
+
 <body>
 
 <header>
-  <h2>🚀 ViralAI Studio</h2>
+  <div class="nav">
+    <div class="logo">🚀 Viral<span>AI</span> Studio</div>
+
+    <nav>
+      <a href="#tools">Tools</a>
+      <a href="#generators">Generators</a>
+      <a href="#about">About</a>
+    </nav>
+  </div>
 </header>
 
-<div class="hero">
-  <h1>Create Content That Goes Viral</h1>
-  <p>AI tools for YouTube, Shorts, captions, hashtags and viral content ideas.</p>
-  <a class="btn" href="#tools">Explore Tools</a>
-</div>
+<section class="hero">
 
-<div class="section" id="tools">
-  <h2>AI Creator Tools</h2>
+  <div class="hero-content">
 
-  <div class="card">
-    <h3>🎬 YouTube Shorts Generator</h3>
-    <p>Create ideas for Shorts from long videos.</p>
+    <div class="badge">
+      ✨ AI-Powered Creator Studio
+    </div>
+
+    <h1>
+      Create Content That
+      <span class="gradient">Gets Attention.</span>
+    </h1>
+
+    <p>
+      Generate viral content ideas, YouTube Shorts concepts,
+      hashtags and captions faster with ViralAI Studio.
+    </p>
+
+    <div class="buttons">
+      <a href="#generators" class="btn primary">
+        Try Free Tools
+      </a>
+
+      <a href="#tools" class="btn secondary">
+        Explore Tools
+      </a>
+    </div>
+
   </div>
 
-  <div class="card">
-    <h3>💡 Viral Idea Generator</h3>
-    <p>Get viral content ideas for any topic.</p>
+</section>
+
+
+<section id="tools">
+
+  <div class="container">
+
+    <h2 class="section-title">
+      Creator Tools
+    </h2>
+
+    <p class="section-subtitle">
+      Everything you need to turn an idea into engaging social content.
+    </p>
+
+    <div class="tools">
+
+      <div class="tool-card">
+        <div class="tool-icon">💡</div>
+        <h3>Viral Ideas</h3>
+        <p>
+          Generate attention-grabbing content concepts for your niche.
+        </p>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon">🎬</div>
+        <h3>YouTube Shorts</h3>
+        <p>
+          Create short-form video concepts designed for attention.
+        </p>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon">#️⃣</div>
+        <h3>Hashtags</h3>
+        <p>
+          Generate relevant hashtags for your social content.
+        </p>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon">✍️</div>
+        <h3>Captions</h3>
+        <p>
+          Create engaging captions for your posts and videos.
+        </p>
+      </div>
+
+    </div>
+
   </div>
 
-  <div class="card">
-    <h3>#️⃣ Hashtag Generator</h3>
-    <p>Generate trending hashtags for YouTube, TikTok and Instagram.</p>
+</section>
+
+
+<section id="generators">
+
+  <div class="container">
+
+    <h2 class="section-title">
+      Free Creator Generators
+    </h2>
+
+    <p class="section-subtitle">
+      Try the ViralAI Studio tools directly in your browser.
+    </p>
+
+
+    <!-- VIRAL IDEA GENERATOR -->
+
+    <div class="generator">
+
+      <h3>💡 Viral Idea Generator</h3>
+
+      <p>
+        Enter your topic and get five content ideas.
+      </p>
+
+      <input
+        id="ideaTopic"
+        type="text"
+        placeholder="Example: fitness, cooking, gaming"
+      >
+
+      <button
+        class="btn primary"
+        onclick="generateIdeas()"
+      >
+        Generate Ideas
+      </button>
+
+      <div id="ideaOutput" class="output"></div>
+
+    </div>
+
+
+    <!-- HASHTAG GENERATOR -->
+
+    <div class="generator">
+
+      <h3>#️⃣ Hashtag Generator</h3>
+
+      <p>
+        Enter a topic to generate hashtags.
+      </p>
+
+      <input
+        id="hashTopic"
+        type="text"
+        placeholder="Example: YouTube Shorts"
+      >
+
+      <button
+        class="btn primary"
+        onclick="generateHashtags()"
+      >
+        Generate Hashtags
+      </button>
+
+      <div id="hashOutput" class="output"></div>
+
+    </div>
+
+
+    <!-- CAPTION GENERATOR -->
+
+    <div class="generator">
+
+      <h3>✍️ Caption Generator</h3>
+
+      <p>
+        Enter your topic and create ready-to-use captions.
+      </p>
+
+      <input
+        id="captionTopic"
+        type="text"
+        placeholder="Example: new YouTube video"
+      >
+
+      <button
+        class="btn primary"
+        onclick="generateCaptions()"
+      >
+        Generate Captions
+      </button>
+
+      <div id="captionOutput" class="output"></div>
+
+    </div>
+
+
+    <!-- SHORTS GENERATOR -->
+
+    <div class="generator">
+
+      <h3>🎬 YouTube Shorts Ideas</h3>
+
+      <p>
+        Enter your niche and get Shorts concepts.
+      </p>
+
+      <input
+        id="shortTopic"
+        type="text"
+        placeholder="Example: AI tools"
+      >
+
+      <button
+        class="btn primary"
+        onclick="generateShorts()"
+      >
+        Generate Shorts Ideas
+      </button>
+
+      <div id="shortOutput" class="output"></div>
+
+    </div>
+
   </div>
 
-  <div class="card">
-    <h3>✍️ AI Caption Generator</h3>
-    <p>Create captions and video descriptions in seconds.</p>
-  </div>
-</div>
+</section>
 
-<div class="section">
-  <h2>About ViralAI Studio</h2>
-  <p>ViralAI Studio helps creators grow with AI-powered content creation tools and YouTube growth ideas.</p>
-</div>
+
+<section id="about" class="about">
+
+  <div class="about-box">
+
+    <h2 class="section-title">
+      About ViralAI Studio
+    </h2>
+
+    <p>
+      ViralAI Studio is built for creators who want to create
+      better content faster. Our mission is to make powerful
+      creator tools simple, accessible and easy to use.
+    </p>
+
+  </div>
+
+</section>
+
+
+<section class="cta">
+
+  <div class="container">
+
+    <h2 class="section-title">
+      Your Next Viral Idea Starts Here.
+    </h2>
+
+    <p class="section-subtitle">
+      Create. Publish. Grow.
+    </p>
+
+    <a href="#generators" class="btn primary">
+      Start Creating
+    </a>
+
+  </div>
+
+</section>
+
 
 <footer>
-  © 2026 ViralAI Studio. All rights reserved.
+
+  © 2026 ViralAI Studio · Built for creators 🚀
+
 </footer>
+
+
+<script>
+
+function generateIdeas() {
+
+  const topic =
+    document.getElementById("ideaTopic").value.trim();
+
+  const output =
+    document.getElementById("ideaOutput");
+
+  if (!topic) {
+    alert("Please enter a topic first.");
+    return;
+  }
+
+  const ideas = [
+    `5 Things Nobody Tells You About ${topic}`,
+    `I Tried ${topic} for 7 Days — Here's What Happened`,
+    `The Biggest ${topic} Mistakes Beginners Make`,
+    `10 ${topic} Tips That Can Save You Time`,
+    `The Ultimate ${topic} Challenge`
+  ];
+
+  output.style.display = "block";
+
+  output.innerHTML =
+    ideas.map((idea, index) =>
+      `<div class="output-item">
+        ${index + 1}. ${idea}
+      </div>`
+    ).join("") +
+    `<button class="copy-btn" onclick="copyOutput('ideaOutput')">
+      📋 Copy Ideas
+    </button>`;
+}
+
+
+function generateHashtags() {
+
+  const topic =
+    document.getElementById("hashTopic").value.trim();
+
+  const output =
+    document.getElementById("hashOutput");
+
+  if (!topic) {
+    alert("Please enter a topic first.");
+    return;
+  }
+
+  const clean =
+    topic.replace(/\s+/g,"");
+
+  const hashtags = [
+    `#${clean}`,
+    `#${clean}Tips`,
+    `#${clean}Ideas`,
+    `#ContentCreator`,
+    `#CreatorTips`,
+    `#ViralContent`,
+    `#YouTube`,
+    `#YouTubeShorts`,
+    `#Shorts`,
+    `#Trending`
+  ];
+
+  output.style.display = "block";
+
+  output.innerHTML =
+    `<div class="output-item">
+      ${hashtags.join(" ")}
+    </div>
+    <button class="copy-btn" onclick="copyOutput('hashOutput')">
+      📋 Copy Hashtags
+    </button>`;
+}
+
+
+function generateCaptions() {
+
+  const topic =
+    document.getElementById("captionTopic").value.trim();
+
+  const output =
+    document.getElementById("captionOutput");
+
+  if (!topic) {
+    alert("Please enter a topic first.");
+    return;
+  }
+
+  const captions = [
+    `🚀 Here's something you need to know about ${topic}.`,
+    `🔥 Would you try this? Let's talk about ${topic}.`,
+    `The ${topic} tip I wish I knew earlier.`,
+    `Save this post if you're interested in ${topic}!`,
+    `What do you think about ${topic}? 👇`
+  ];
+
+  output.style.display = "block";
+
+  output.innerHTML =
+    captions.map((caption, index) =>
+      `<div class="output-item">
+        ${index + 1}. ${caption}
+      </div>`
+    ).join("") +
+    `<button class="copy-btn" onclick="copyOutput('captionOutput')">
+      📋 Copy Captions
+    </button>`;
+}
+
+
+function generateShorts() {
+
+  const topic =
+    document.getElementById("shortTopic").value.trim();
+
+  const output =
+    document.getElementById("shortOutput");
+
+  if (!topic) {
+    alert("Please enter a niche first.");
+    return;
+  }
+
+  const ideas = [
+    `3 ${topic} Tricks You Need to Know`,
+    `The ${topic} Mistake Everyone Makes`,
+    `I Tested This ${topic} Hack`,
+    `Nobody Talks About This ${topic} Secret`,
+    `Watch This Before You Try ${topic}`
+  ];
+
+  output.style.display = "block";
+
+  output.innerHTML =
+    ideas.map((idea, index) =>
+      `<div class="output-item">
+        🎬 ${index + 1}. ${idea}
+      </div>`
+    ).join("") +
+    `<button class="copy-btn" onclick="copyOutput('shortOutput')">
+      📋 Copy Ideas
+    </button>`;
+}
+
+
+function copyOutput(id) {
+
+  const element =
+    document.getElementById(id);
+
+  const text =
+    element.innerText;
+
+  navigator.clipboard.writeText(text);
+
+  alert("Copied to clipboard! ✅");
+}
+
+</script>
 
 </body>
 </html>
